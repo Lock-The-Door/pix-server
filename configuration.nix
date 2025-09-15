@@ -89,6 +89,7 @@
     extraUpFlags = [
       "--advertise-exit-node"
       "--ssh"
+      "--qr"
     ];
   };
   fileSystems."/var/lib/tailscale" = {
