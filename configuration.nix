@@ -91,6 +91,12 @@
       "--ssh"
     ];
   };
+  fileSystems."/var/lib/tailscale" = {
+    depends = [ "/data" ];
+    device = "/data/tailscale";
+    fsType = "none";
+    options = [ "bind" ];
+  };
   services.caddy = {
     enable = true;
     virtualHosts = {
