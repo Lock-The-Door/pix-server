@@ -79,15 +79,25 @@
   # };
 
   # List services that you want to enable:
+  services.btrfs.autoScrub.enable = true;
   services.tailscale = {
     enable = true;
     openFirewall = true;
     authKeyFile = "/etc/nixos/auth/tailscale";
     useRoutingFeatures = "server";
+    permitCertUid = "caddy";
     extraUpFlags = [
       "--advertise-exit-node"
       "--ssh"
     ];
+  };
+  services.caddy = {
+    enable = true;
+    virtualHosts = {
+      "pix.pug-squeaker.ts.net:3456" = {
+        extraConfig = "reverse_proxy 192.168.100.11:3456";
+      };
+    };
   };
 
   # Enable the OpenSSH daemon.
@@ -105,11 +115,9 @@
       autoStart = true;
       ephemeral = true;
       privateNetwork = true;
-      forwardPorts = [
-        {
-          hostPort = 3456;
-        }
-      ];
+      privateUsers = "pick";
+      hostAddress = "192.168.100.10";
+      localAddress = "192.168.100.11";
 
       config = { config, pkgs, ... }: {
         networking.firewall = {
@@ -120,6 +128,13 @@
           enable = true;
           frontendScheme = "http";
           frontendHostname = "pix.pug-squeaker.ts.net";
+        };
+      };
+
+      bindMounts = {
+        "/var/lib/private:idmap" = {
+          hostPath = "/data";
+          isReadOnly = false;
         };
       };
     };
