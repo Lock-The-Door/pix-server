@@ -57,13 +57,18 @@
   };
   users.mutableUsers = false;
 
-
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     vim
     croc
   ];
+
+  # Nix configuration
+  nix.settings = {
+    extra-experimental-features = [ "nix-command" "flakes" ];
+    accept-flake-config = true;
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
