@@ -1,5 +1,5 @@
 {
-  description = "My NixOS Configuration";
+  description = "My NixOS Server Configuration";
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-25.05";
@@ -7,13 +7,13 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: {
+  outputs = { self, nixpkgs, disko, ... }: {
     nixosConfigurations = {
       pix = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
         modules = [
           ./configuration.nix
+          disko.nixosModules.disko
           ./disko-config.nix
         ];
       };
