@@ -123,6 +123,7 @@
       ephemeral = true;
       privateNetwork = true;
       privateUsers = "pick";
+
       hostAddress = "192.168.100.10";
       localAddress = "192.168.100.11";
 
@@ -131,18 +132,74 @@
           allowedTCPPorts = [ 3456 ];
         };
 
+        systemd.services.generate-typesense-key = {
+          requiredBy = [ "typesense.service" ];
+          before = [ "typesense.service" ];
+          serviceConfig = {
+            Type = "oneshot";
+            DynamicUser = true;
+            User = "typesense";
+            Group = "typesense";
+            RuntimeDirectory = "typesense-key";
+          };
+          script = ''
+            set -euo pipefail
+            key="$(${pkgs.coreutils}/bin/tr -dc 'A-Za-z0-9' </dev/urandom | ${pkgs.coreutils}/bin/head -c 32)"
+            touch "${RUNTIME_DIRECTORY}/typesense.key"
+            ${pkgs.coreutils}/bin/chmod 600 "${RUNTIME_DIRECTORY}/typesense.key"
+            printf '%s' "$key" > "${RUNTIME_DIRECTORY}/typesense.key"
+          '';
+        };
+        systemd.services.copy-typesense-key = {
+          requires = [ "generate-typesense-key.service" ];
+          after = [ "generate-typesense-key.service" ];
+          wantedBy = [ "vikunja.service" ];
+          before = [ "vikunja.service" ];
+          serviceConfig = {
+            Type = "oneshot";
+            RuntimeDirectory = "typesense-key";
+          };
+          script = ''
+            set -euo pipefail
+            touch "${RUNTIME_DIRECTORY}/vikunja.env"
+            ${pkgs.coreutils}/bin/chmod 600 "${RUNTIME_DIRECTORY}/vikunja.env"
+            ${pkgs.coreutils}/bin/cat <(printf "VIKUNJA_TYPESENSE_APIKEY=") "${RUNTIME_DIRECTORY}/typesense.key" > "${RUNTIME_DIRECTORY}/vikunja.env"
+          '';
+        };
+
+        services.typesense = {
+          enable = true;
+          apiKeyFile = "/run/typesense-key/typesense.key";
+          settings.server.api-address = "127.0.0.1";
+        };
+
         services.vikunja = {
           enable = true;
-          frontendScheme = "http";
+          frontendScheme = "https";
           frontendHostname = "pix.pug-squeaker.ts.net";
+          environmentFiles = [ "/run/typesense-key/vikunja.env" ];
+          settings = {
+            cors = {
+              enable = true;
+              origins = [ "https://pix-pug-squeaker.ts.net:3456" ];
+              maxage = 0;
+            };
+            typesense = {
+              enable = true;
+              url = "http://127.0.0.1:8108";
+            };
+          };
         };
       };
 
       bindMounts = {
-        "/var/lib/private:idmap" = {
-          hostPath = "/data";
+        "/var/lib/vikunja:idmap" = {
+          hostPath = "/data/vikunja";
           isReadOnly = false;
         };
+#         "/var/lib/typesense:idmap" = {
+#           hostPath = "/var/tmp/vikunja-typesense";
+#         };
       };
     };
   };
