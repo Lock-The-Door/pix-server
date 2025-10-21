@@ -5,28 +5,6 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
-
-  # Use the systemd-boot EFI boot loader.
-  boot.loader = {
-    efi = {
-      # canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot/EFI";
-    };
-    systemd-boot = {
-      enable = true;
-      editor = false;
-    };
-    grub.enable = false;
-    timeout = 2;
-  };
-
-  # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
   networking.hostName = "pix"; # Define your hostname.
   # Pick only one of the below networking options.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
@@ -138,16 +116,19 @@
           serviceConfig = {
             Type = "oneshot";
             DynamicUser = true;
-            User = "typesense";
-            Group = "typesense";
-            RuntimeDirectory = "typesense-key";
+            StateDirectory = "typesense-key";
+            RemainAfterExit = true;
           };
           script = ''
             set -euo pipefail
-            key="$(${pkgs.coreutils}/bin/tr -dc 'A-Za-z0-9' </dev/urandom | ${pkgs.coreutils}/bin/head -c 32)"
-            touch "${RUNTIME_DIRECTORY}/typesense.key"
-            ${pkgs.coreutils}/bin/chmod 600 "${RUNTIME_DIRECTORY}/typesense.key"
-            printf '%s' "$key" > "${RUNTIME_DIRECTORY}/typesense.key"
+            key="$(${pkgs.pwgen}/bin/pwgen -s 32 1)"
+            touch "/var/lib/typesense-key/typesense.key"
+            ${pkgs.coreutils}/bin/chmod 600 "/var/lib/typesense-key/typesense.key"
+            printf '%s' "$key" > "/var/lib/typesense-key/typesense.key"
+
+            touch "/var/lib/typesense-key/typesense.env"
+            ${pkgs.coreutils}/bin/chmod 600 "/var/lib/typesense-key/typesense.env"
+            ${pkgs.coreutils}/bin/cat <(printf "TYPESENSE_API_KEY=") "/var/lib/typesense-key/typesense.key" > "/var/lib/typesense-key/typesense.env"
           '';
         };
         systemd.services.copy-typesense-key = {
@@ -157,19 +138,22 @@
           before = [ "vikunja.service" ];
           serviceConfig = {
             Type = "oneshot";
-            RuntimeDirectory = "typesense-key";
+            DynamicUser = true;
+            StateDirectory = "typesense-key";
+            RemainAfterExit = true;
           };
           script = ''
             set -euo pipefail
-            touch "${RUNTIME_DIRECTORY}/vikunja.env"
-            ${pkgs.coreutils}/bin/chmod 600 "${RUNTIME_DIRECTORY}/vikunja.env"
-            ${pkgs.coreutils}/bin/cat <(printf "VIKUNJA_TYPESENSE_APIKEY=") "${RUNTIME_DIRECTORY}/typesense.key" > "${RUNTIME_DIRECTORY}/vikunja.env"
+            touch "/var/lib/typesense-key/vikunja.env"
+            ${pkgs.coreutils}/bin/chmod 600 "/var/lib/typesense-key/vikunja.env"
+            ${pkgs.coreutils}/bin/cat <(printf "VIKUNJA_TYPESENSE_APIKEY=") "/var/lib/typesense-key/typesense.key" > "/var/lib/typesense-key/vikunja.env"
+            ${pkgs.coreutils}/bin/cp /var/lib/typesense-key/typesense.key /etc/typesense/api.key
           '';
         };
 
         services.typesense = {
           enable = true;
-          apiKeyFile = "/run/typesense-key/typesense.key";
+          environmentFiles = [ "/var/lib/typesense-key/typesense.env" ];
           settings.server.api-address = "127.0.0.1";
         };
 
@@ -177,7 +161,7 @@
           enable = true;
           frontendScheme = "https";
           frontendHostname = "pix.pug-squeaker.ts.net";
-          environmentFiles = [ "/run/typesense-key/vikunja.env" ];
+          environmentFiles = [ "/var/lib/typesense-key/vikunja.env" ];
           settings = {
             cors = {
               enable = true;
@@ -193,7 +177,7 @@
       };
 
       bindMounts = {
-        "/var/lib/vikunja:idmap" = {
+        "/var/lib/private/vikunja:idmap" = {
           hostPath = "/data/vikunja";
           isReadOnly = false;
         };
@@ -223,4 +207,3 @@
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.05"; # Did you read the comment?
 }
-
