@@ -56,7 +56,6 @@
               # Hardware configuration
               raspberry-pi-5.base
               raspberry-pi-5.page-size-16k
-              raspberry-pi-5.display-vc4
               raspberry-pi-5.bluetooth
               usb-gadget-ethernet
             ];
@@ -66,21 +65,6 @@
           ./configuration.nix
           disko.nixosModules.disko
           ./disko-config.nix
-        ];
-      };
-      pix-installer = nixos-raspberrypi.lib.nixosInstaller {
-        specialArgs = inputs;
-        modules = [
-          ({ config, pkgs, lib, nixos-raspberrypi, disko, ... }: {
-            imports = with nixos-raspberrypi.nixosModules; [
-              # Hardware configuration
-              raspberry-pi-5.base
-              raspberry-pi-5.page-size-16k
-              raspberry-pi-5.display-vc4
-              usb-gadget-ethernet
-            ];
-            boot.loader.raspberryPi.bootloader = "kernel";
-          })
         ];
       };
     };
