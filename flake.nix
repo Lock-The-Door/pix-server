@@ -20,13 +20,32 @@
 
   outputs = { self, nixpkgs, disko, nixos-raspberrypi, ... }@inputs: {
     nixosConfigurations = {
+      pix = nixos-raspberrypi.lib.nixosSystemFull {
+        specialArgs = inputs;
+        modules = [
+          ({ config, pkgs, lib, nixos-raspberrypi, disko, ... }: {
+            imports = with nixos-raspberrypi.nixosModules; [
+              # Hardware configuration
+              raspberry-pi-5.base
+              raspberry-pi-5.page-size-16k
+              raspberry-pi-5.bluetooth
+              usb-gadget-ethernet
+            ];
+            boot.loader.raspberryPi.bootloader = "kernel";
+          })
+
+          ./configuration.nix
+          disko.nixosModules.disko
+          ./disko-config.nix
+        ];
+      };
       pix-x86 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./hardware-configuration.nix
           ./configuration.nix
           disko.nixosModules.disko
-          ./disko-config.nix
+          ./disko-config-efi.nix
 
           ({ config, pkgs, ...}: {
               # Use the systemd-boot EFI boot loader.
@@ -46,25 +65,6 @@
               # Use latest kernel.
               boot.kernelPackages = pkgs.linuxPackages_latest;
           })
-        ];
-      };
-      pix = nixos-raspberrypi.lib.nixosSystemFull {
-        specialArgs = inputs;
-        modules = [
-          ({ config, pkgs, lib, nixos-raspberrypi, disko, ... }: {
-            imports = with nixos-raspberrypi.nixosModules; [
-              # Hardware configuration
-              raspberry-pi-5.base
-              raspberry-pi-5.page-size-16k
-              raspberry-pi-5.bluetooth
-              usb-gadget-ethernet
-            ];
-            boot.loader.raspberryPi.bootloader = "kernel";
-          })
-
-          ./configuration.nix
-          disko.nixosModules.disko
-          ./disko-config.nix
         ];
       };
     };

@@ -7,15 +7,16 @@
         content = {
           type = "gpt";
           partitions = {
-            boot = {
+            ESP = {
               priority = 1;
+              name = "ESP";
               start = "1M";
               end = "256M";
               type = "EF00";
               content = {
                 type = "filesystem";
                 format = "vfat";
-                mountpoint = "/boot/firmware";
+                mountpoint = "/boot/EFI";
                 mountOptions = [ "umask=0077" ];
               };
             };
