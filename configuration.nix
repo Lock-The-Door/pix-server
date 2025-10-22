@@ -5,10 +5,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./pkgs/typesense.nix
-  ];
-
   networking.hostName = "pix"; # Define your hostname.
   # Pick only one of the below networking options.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
@@ -156,8 +152,8 @@
         };
 
         services.typesense = {
-          enable = true;
-          environmentFiles = [ "/var/lib/typesense-key/typesense.env" ];
+          enable = false;
+          #environmentFiles = [ "/var/lib/typesense-key/typesense.env" ];
           settings.server.api-address = "127.0.0.1";
         };
 
