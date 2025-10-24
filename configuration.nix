@@ -169,7 +169,7 @@
               maxage = 0;
             };
             typesense = {
-              enable = true;
+              enable = false;
               url = "http://127.0.0.1:8108";
             };
           };

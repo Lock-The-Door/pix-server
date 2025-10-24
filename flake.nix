@@ -29,7 +29,6 @@
               raspberry-pi-5.base
               raspberry-pi-5.page-size-16k
               raspberry-pi-5.bluetooth
-              usb-gadget-ethernet
             ];
             boot.loader.raspberryPi.bootloader = "kernel";
           })
