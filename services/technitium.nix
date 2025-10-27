@@ -16,6 +16,6 @@
     enable = true;
     openFirewall = true;
     firewallUDPPorts = [ 53 853 ];
-    firewallTCPPorts = [ 53 443 853 5380 ];
+    firewallTCPPorts = [ 53 443 853 5380 53443 ];
   };
 }
