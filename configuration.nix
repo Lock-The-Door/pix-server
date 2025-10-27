@@ -7,6 +7,7 @@
 {
   imports = [
     ./services/vikunja.nix
+    ./services/technitium.nix
   ];
 
   networking.hostName = "pix"; # Define your hostname.
