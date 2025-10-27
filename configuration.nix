@@ -45,6 +45,7 @@
   environment.systemPackages = with pkgs; [
     vim
     croc
+    git
   ];
 
   # Nix configuration
