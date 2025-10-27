@@ -10,7 +10,7 @@
   systemd.services.technitium-dns-server.serviceConfig = {
     WorkingDirectory = lib.mkForce null;
     BindPaths = lib.mkForce null;
-    environment.LD_LIBRARY_PATH = lib.strings.makeLibraryPath [ pkgs.libmsquic ];
+    environment.LD_LIBRARY_PATH = "${pkgs.libmsquic.out}/lib";
   };
   services.technitium-dns-server = {
     enable = true;
