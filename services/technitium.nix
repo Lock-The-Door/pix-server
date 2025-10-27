@@ -1,6 +1,6 @@
 { ... }:
 {
-  fileSystems."/var/lib/private/technitium-dns-server:idmap" = {
+  fileSystems."/var/lib/private/technitium-dns-server" = {
       depends = [ "/data" ];
       device = "/data/technitium";
       fsType = "none";
