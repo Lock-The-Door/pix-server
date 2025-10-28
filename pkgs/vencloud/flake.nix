@@ -55,7 +55,7 @@
           };
         });
 
-      nixosModules.vencloud = { lib, pkgs, config }:
+      nixosModules.vencloud = { lib, pkgs, config, ... }:
         let
           inherit (lib)
             mkOption mkIf types mkEnableOption mkPackageOption concatStringsSep;
