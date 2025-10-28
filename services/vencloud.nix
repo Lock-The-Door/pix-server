@@ -6,8 +6,7 @@
   ];
 
   services.caddy.virtualHosts."pix.pug-squeaker.ts.net:8012" = {
-    extraConfig = ''reverse_proxy 192.168.101.100:8080
-      header ?Access-Control-Allow-Origin "https://discord.com"'';
+    extraConfig = "reverse_proxy 192.168.101.100:8080";
   };
   networking.firewall.allowedTCPPorts = [ 8012 ];
 
