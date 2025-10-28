@@ -1,29 +1,30 @@
 {
-  description = "My NixOS Server Configuration";
+  description = "My NixOS Server Configuration for a Raspberry Pi 5";
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-25.05";
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    vencloud.url = "path:./pkgs/vencloud";
+    vencloud.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   # Optional: Binary cache for the flake
   nixConfig = {
-    extra-substituters = [
-      "https://nixos-raspberrypi.cachix.org"
-    ];
+    extra-substituters = [ "https://nixos-raspberrypi.cachix.org" ];
     extra-trusted-public-keys = [
       "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
     ];
   };
 
-  outputs = { self, nixpkgs, disko, nixos-raspberrypi, ... }@inputs: {
+  outputs = { nixpkgs, disko, nixos-raspberrypi, vencord, ... }@inputs: {
     nixosConfigurations = {
       pix = nixos-raspberrypi.lib.nixosSystemFull {
         specialArgs = inputs;
         modules = [
-          ({ config, pkgs, lib, nixos-raspberrypi, disko, ... }: {
+          ({ nixos-raspberrypi, ... }: {
             imports = with nixos-raspberrypi.nixosModules; [
               # Hardware configuration
               raspberry-pi-5.base
@@ -36,6 +37,7 @@
           ./configuration.nix
           disko.nixosModules.disko
           ./disko-config.nix
+          vencord.nixosModules.default
         ];
       };
       pix-x86 = nixpkgs.lib.nixosSystem {
@@ -45,24 +47,25 @@
           ./configuration.nix
           disko.nixosModules.disko
           ./disko-config-efi.nix
+          vencord.nixosModules.default
 
-          ({ config, pkgs, ...}: {
-              # Use the systemd-boot EFI boot loader.
-              boot.loader = {
-                efi = {
-                  # canTouchEfiVariables = true;
-                  efiSysMountPoint = "/boot/EFI";
-                };
-                systemd-boot = {
-                  enable = true;
-                  editor = false;
-                };
-                grub.enable = false;
-                timeout = 2;
+          ({ pkgs, ... }: {
+            # Use the systemd-boot EFI boot loader.
+            boot.loader = {
+              efi = {
+                # canTouchEfiVariables = true;
+                efiSysMountPoint = "/boot/EFI";
               };
+              systemd-boot = {
+                enable = true;
+                editor = false;
+              };
+              grub.enable = false;
+              timeout = 2;
+            };
 
-              # Use latest kernel.
-              boot.kernelPackages = pkgs.linuxPackages_latest;
+            # Use latest kernel.
+            boot.kernelPackages = pkgs.linuxPackages_latest;
           })
         ];
       };

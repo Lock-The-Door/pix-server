@@ -5,14 +5,12 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./services/vikunja.nix
-    ./services/technitium.nix
-  ];
+  imports = [ ./services/vikunja.nix ./services/technitium.nix ];
 
   networking.hostName = "pix"; # Define your hostname.
   # Pick only one of the below networking options.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable =
+    true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "Americas/Toronto";
@@ -36,17 +34,14 @@
     isNormalUser = true;
     description = "Jonathan";
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    hashedPassword = "$y$j9T$a50mifrxV5oU9iX2hRck1/$97yzt0kTnORzQQTbv4bc0SmLWK1YNPB38dzgDcV2e81";
+    hashedPassword =
+      "$y$j9T$a50mifrxV5oU9iX2hRck1/$97yzt0kTnORzQQTbv4bc0SmLWK1YNPB38dzgDcV2e81";
   };
   users.mutableUsers = false;
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
-  environment.systemPackages = with pkgs; [
-    vim
-    croc
-    git
-  ];
+  environment.systemPackages = with pkgs; [ vim croc git ];
 
   # Nix configuration
   nix.settings = {
@@ -70,11 +65,7 @@
     authKeyFile = "/etc/nixos/auth/tailscale";
     useRoutingFeatures = "server";
     permitCertUid = "caddy";
-    extraUpFlags = [
-      "--advertise-exit-node"
-      "--ssh"
-      "--qr"
-    ];
+    extraUpFlags = [ "--advertise-exit-node" "--ssh" "--qr" ];
   };
   fileSystems."/var/lib/tailscale" = {
     depends = [ "/data" ];

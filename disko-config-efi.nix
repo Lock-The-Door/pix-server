@@ -51,15 +51,13 @@
                     mountOptions = [ "compress=lzo" ];
                     mountpoint = "/data";
                   };
-                  "/data/tailscale" = {};
-                  "/data/vikunja" = {};
+                  "/data/tailscale" = { };
+                  "/data/vikunja" = { };
                   # Subvolume for the swapfile
                   "/swap" = {
                     mountpoint = "/.swap";
                     mountOptions = [ "compress=lzo" "noatime" ];
-                    swap = {
-                      swapfile.size = "8G";
-                    };
+                    swap = { swapfile.size = "8G"; };
                   };
                 };
               };
