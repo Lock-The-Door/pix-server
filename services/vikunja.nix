@@ -1,6 +1,6 @@
 { ... }: {
   services.caddy.virtualHosts."pix.pug-squeaker.ts.net:3456" = {
-    extraConfig = "reverse_proxy 192.168.100.10:3456";
+    extraConfig = "reverse_proxy 192.168.100.100:3456";
   };
   networking.firewall.allowedTCPPorts = [ 3456 ];
 

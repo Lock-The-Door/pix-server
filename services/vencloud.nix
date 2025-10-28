@@ -23,6 +23,8 @@
     config = { ... }: {
       imports = [ vencloud.nixosModules.vencloud ];
       nixpkgs.pkgs = pkgs;
+
+      networking.firewall.allowedTCPPorts = [ 8080 ];
       services.vencloud = {
         enable = true;
         allowedUsers = [ 374284798820352000 ];
