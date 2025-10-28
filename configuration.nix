@@ -2,10 +2,10 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  imports = [ ./services/vikunja.nix ./services/technitium.nix ];
+  imports = [ ./services/technitium.nix ./services/vikunja.nix ./services/vencloud.nix ];
 
   networking.hostName = "pix"; # Define your hostname.
   # Pick only one of the below networking options.
