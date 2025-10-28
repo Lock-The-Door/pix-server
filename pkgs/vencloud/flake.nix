@@ -89,7 +89,7 @@
             };
             redisUri = mkOption {
               type = types.str;
-              default = "redis:6379";
+              default = "redis://127.0.0.1:6379";
               description = "The URI used for connecting to redis";
             };
 
