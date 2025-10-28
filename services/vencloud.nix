@@ -45,7 +45,10 @@
       "/run/secrets/vencloud.env:idmap" = {
         hostPath = "/etc/nixos/auth/vencloud.env";
       };
-
+      "/var/lib/redis:idmap" = {
+        hostPath = "/data/vencloud";
+        readOnly = false;
+      };
     };
   };
 }
