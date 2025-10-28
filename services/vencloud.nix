@@ -47,7 +47,7 @@
       };
       "/var/lib/redis:idmap" = {
         hostPath = "/data/vencloud";
-        readOnly = false;
+        isReadOnly = false;
       };
     };
   };
