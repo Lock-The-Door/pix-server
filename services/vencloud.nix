@@ -1,8 +1,6 @@
 { pkgs, vencloud, ... }: {
-  nixpkgs.overlays =  [
-    (final: prev: {
-      vencloud = vencloud.packages.${final.system}.default;
-    })
+  nixpkgs.overlays = [
+    (final: prev: { vencloud = vencloud.packages.${final.system}.default; })
   ];
 
   services.caddy.virtualHosts."pix.pug-squeaker.ts.net:8012" = {

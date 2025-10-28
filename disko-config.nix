@@ -51,8 +51,9 @@
                     mountpoint = "/data";
                   };
                   "/data/tailscale" = { };
-                  "/data/vikunja" = { };
                   "/data/technitium" = { };
+                  "/data/vikunja" = { };
+                  "/data/vencloud" = { };
                   # Subvolume for the swapfile
                   "/swap" = {
                     mountpoint = "/.swap";

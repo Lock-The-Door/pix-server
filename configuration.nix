@@ -5,7 +5,11 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./services/technitium.nix ./services/vikunja.nix ./services/vencloud.nix ];
+  imports = [
+    ./services/technitium.nix
+    ./services/vikunja.nix
+    ./services/vencloud.nix
+  ];
 
   networking.hostName = "pix"; # Define your hostname.
   # Pick only one of the below networking options.
