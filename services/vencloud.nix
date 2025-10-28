@@ -30,7 +30,7 @@
         redisService = "redis-vencloud.service";
         allowedUsers = [ 374284798820352000 ];
         proxyHeader = "X-Forwarded-For";
-        environmentFiles = [ "/etc/nixos/auth/vencloud.env" ];
+        environmentFiles = [ "/run/secrets/vencloud.env" ];
       };
 
       services.redis.servers."vencloud" = {
@@ -39,6 +39,14 @@
       };
 
       system.stateVersion = "25.05";
+    };
+
+    bindMounts = {
+      "/run/secrets/vencloud.env:idmap" = {
+        hostPath = "/etc/nixos/auth/vencloud.env";
+        isReadOnly = false;
+      };
+
     };
   };
 }
