@@ -48,7 +48,7 @@
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
-  environment.systemPackages = with pkgs; [ vim croc git ];
+  environment.systemPackages = with pkgs; [ vim croc git disko ];
 
   # Nix configuration
   nix.settings = {
