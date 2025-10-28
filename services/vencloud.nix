@@ -27,6 +27,7 @@
       networking.firewall.allowedTCPPorts = [ 8080 ];
       services.vencloud = {
         enable = true;
+        redisService = "redis-vencloud.service";
         allowedUsers = [ 374284798820352000 ];
         proxyHeader = "X-Forwarded-For";
         environmentFiles = [ "/etc/nixos/auth/vencloud.env" ];

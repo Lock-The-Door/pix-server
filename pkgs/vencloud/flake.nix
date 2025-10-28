@@ -64,6 +64,11 @@
           options.services.vencloud = {
             enable = mkEnableOption "vencloud";
             package = mkPackageOption pkgs "vencloud" { };
+            redisService = mkOption {
+              type = types.str;
+              default = "redis.service";
+              description = "The name of the systemd redis service vencloud should depend on";
+            };
 
             settings = mkOption {
               type = types.attrsOf types.str;
@@ -150,7 +155,7 @@
             systemd.services.vencloud = {
               description = "Vencloud Service";
               wantedBy = [ "multi-user.target" ];
-              after = [ "network.target" "redis.service" ];
+              after = [ "network.target" cfg.redisService ];
               requires = [ "redis.service" ];
               environment = cfg.settings;
               serviceConfig = {
