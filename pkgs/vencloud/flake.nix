@@ -156,7 +156,7 @@
               description = "Vencloud Service";
               wantedBy = [ "multi-user.target" ];
               after = [ "network.target" cfg.redisService ];
-              requires = [ "redis.service" ];
+              requires = [ cfg.redisService ];
               environment = cfg.settings;
               serviceConfig = {
                 ExecStart = "${cfg.package}/bin/vencloud";
