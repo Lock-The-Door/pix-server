@@ -19,6 +19,9 @@
   # Set your time zone.
   time.timeZone = "Americas/Toronto";
 
+  boot.loader.systemd-boot.configurationLimit = 2;
+  boot.loader.grub.configurationLimit = 2;
+
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
   # console = {
