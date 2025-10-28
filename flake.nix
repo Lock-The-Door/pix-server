@@ -37,7 +37,7 @@
           ./configuration.nix
           disko.nixosModules.disko
           ./disko-config.nix
-          vencloud.nixosModules.default
+          vencloud.nixosModules.vencloud
         ];
       };
       pix-x86 = nixpkgs.lib.nixosSystem {
@@ -47,7 +47,7 @@
           ./configuration.nix
           disko.nixosModules.disko
           ./disko-config-efi.nix
-          vencloud.nixosModules.default
+          vencloud.nixosModules.vencloud
 
           ({ pkgs, ... }: {
             # Use the systemd-boot EFI boot loader.
