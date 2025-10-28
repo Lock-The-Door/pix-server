@@ -37,7 +37,6 @@
           ./configuration.nix
           disko.nixosModules.disko
           ./disko-config.nix
-          vencloud.nixosModules.vencloud
         ];
       };
       pix-x86 = nixpkgs.lib.nixosSystem {
