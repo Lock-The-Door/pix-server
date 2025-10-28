@@ -62,7 +62,7 @@
           cfg = config.services.vencloud;
         in {
           options.services.vencloud = {
-            enable = mkEnableOption "Vencloud";
+            enable = mkEnableOption "vencloud";
             package = mkPackageOption pkgs "vencloud" { };
 
             settings = mkOption {
@@ -152,9 +152,9 @@
               wantedBy = [ "multi-user.target" ];
               after = [ "network.target" "redis.service" ];
               requires = [ "redis.service" ];
+              environment = cfg.settings;
               serviceConfig = {
                 ExecStart = "${cfg.package}/bin/vencloud";
-                Environment = cfg.settings;
                 EnvironmentFile = cfg.environmentFiles;
                 Restart = "always";
 

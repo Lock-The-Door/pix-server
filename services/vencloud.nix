@@ -1,4 +1,10 @@
-{ ... }: {
+{ pkgs, vencloud, ... }: {
+  nixpkgs.overlays =  [
+    (final: prev: {
+      vencloud = vencloud.packages.${final.system}.default;
+    })
+  ];
+
   services.caddy.virtualHosts."pix.pug-squeaker.ts.net:8012" = {
     extraConfig = "reverse_proxy 192.168.101.100:8080";
   };
@@ -15,17 +21,21 @@
     localAddress = "192.168.101.100";
 
     config = { ... }: {
-      services.vencord = {
+      imports = [ vencloud.nixosModules.vencloud ];
+      nixpkgs.pkgs = pkgs;
+      services.vencloud = {
         enable = true;
         allowedUsers = [ 374284798820352000 ];
         proxyHeader = "X-Forwarded-For";
         environmentFiles = [ "/etc/nixos/auth/vencloud.env" ];
       };
 
-      services.redis = {
+      services.redis.servers."vencloud" = {
         enable = true;
         save = [ [ 300 1 ] [ 60 10 ] ];
       };
+
+      system.stateVersion = "25.05";
     };
   };
 }

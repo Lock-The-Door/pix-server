@@ -47,7 +47,6 @@
           ./configuration.nix
           disko.nixosModules.disko
           ./disko-config-efi.nix
-          vencloud.nixosModules.vencloud
 
           ({ pkgs, ... }: {
             # Use the systemd-boot EFI boot loader.
