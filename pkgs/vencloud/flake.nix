@@ -159,7 +159,7 @@
               requires = [ cfg.redisService ];
               environment = cfg.settings;
               serviceConfig = {
-                ExecStart = "${cfg.package}/bin/vencloud";
+                ExecStart = "${cfg.package}/bin/backend";
                 EnvironmentFile = cfg.environmentFiles;
                 Restart = "always";
 
