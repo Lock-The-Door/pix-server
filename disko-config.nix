@@ -3,7 +3,7 @@
     disk = {
       primary = {
         type = "disk";
-        device = "/dev/mmcblk0";
+        device = "/dev/vda";
         content = {
           type = "gpt";
           partitions = {
