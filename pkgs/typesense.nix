@@ -1,31 +1,19 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 let
   inherit (lib)
-    concatMapStringsSep
-    generators
-    mkEnableOption
-    mkIf
-    mkOption
-    mkPackageOption
-    optionalString
-    types
-    ;
+    concatMapStringsSep generators mkEnableOption mkIf mkOption mkPackageOption
+    optionalString types;
 
   cfg = config.services.typesense;
   settingsFormatIni = pkgs.formats.ini {
     listToValue = concatMapStringsSep " " (generators.mkValueStringDefault { });
     mkKeyValue = generators.mkKeyValueDefault {
-      mkValueString = v: if v == null then "" else generators.mkValueStringDefault { } v;
+      mkValueString = v:
+        if v == null then "" else generators.mkValueStringDefault { } v;
     } "=";
   };
   configFile = settingsFormatIni.generate "typesense.ini" cfg.settings;
-in
-{
+in {
   options.services.typesense = {
     enable = mkEnableOption "typesense";
     package = mkPackageOption pkgs "typesense" { };
@@ -40,7 +28,8 @@ in
     };
 
     settings = mkOption {
-      description = "Typesense configuration. Refer to [the documentation](https://typesense.org/docs/0.24.1/api/server-configuration.html) for supported values.";
+      description =
+        "Typesense configuration. Refer to [the documentation](https://typesense.org/docs/0.24.1/api/server-configuration.html) for supported values.";
       default = { };
       type = types.submodule {
         freeformType = settingsFormatIni.type;
@@ -48,7 +37,8 @@ in
           data-dir = mkOption {
             type = types.str;
             default = "/var/lib/typesense";
-            description = "Path to the directory where data will be stored on disk.";
+            description =
+              "Path to the directory where data will be stored on disk.";
           };
 
           api-address = mkOption {
@@ -81,7 +71,8 @@ in
         StateDirectory = "typesense";
         StateDirectoryMode = "0750";
 
-        ExecStart = "${cfg.package}/bin/typesense-server --config ${configFile}";
+        ExecStart =
+          "${cfg.package}/bin/typesense-server --config ${configFile}";
         EnvironmentFile = cfg.environmentFiles;
 
         # Hardening
@@ -104,19 +95,12 @@ in
         ProcSubset = "pid";
         ProtectSystem = "strict";
         RemoveIPC = true;
-        RestrictAddressFamilies = [
-          "AF_INET"
-          "AF_INET6"
-          "AF_UNIX"
-        ];
+        RestrictAddressFamilies = [ "AF_INET" "AF_INET6" "AF_UNIX" ];
         RestrictNamespaces = true;
         RestrictRealtime = true;
         RestrictSUIDSGID = true;
         SystemCallArchitectures = "native";
-        SystemCallFilter = [
-          "@system-service"
-          "~@privileged"
-        ];
+        SystemCallFilter = [ "@system-service" "~@privileged" ];
         UMask = "0077";
       };
     };
