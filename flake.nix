@@ -19,7 +19,7 @@
     ];
   };
 
-  outputs = { nixpkgs, disko, nixos-raspberrypi, vencord, ... }@inputs: {
+  outputs = { nixpkgs, disko, nixos-raspberrypi, vencloud, ... }@inputs: {
     nixosConfigurations = {
       pix = nixos-raspberrypi.lib.nixosSystemFull {
         specialArgs = inputs;
@@ -37,7 +37,7 @@
           ./configuration.nix
           disko.nixosModules.disko
           ./disko-config.nix
-          vencord.nixosModules.default
+          vencloud.nixosModules.default
         ];
       };
       pix-x86 = nixpkgs.lib.nixosSystem {
@@ -47,7 +47,7 @@
           ./configuration.nix
           disko.nixosModules.disko
           ./disko-config-efi.nix
-          vencord.nixosModules.default
+          vencloud.nixosModules.default
 
           ({ pkgs, ... }: {
             # Use the systemd-boot EFI boot loader.

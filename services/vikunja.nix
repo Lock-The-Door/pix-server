@@ -14,7 +14,7 @@
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.100";
 
-    config = { config, pkgs, ... }: {
+    config = { pkgs, ... }: {
       networking.firewall = { allowedTCPPorts = [ 3456 ]; };
 
       systemd.services.generate-typesense-key = {

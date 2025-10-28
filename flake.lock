@@ -101,11 +101,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1761016216,
-        "narHash": "sha256-G/iC4t/9j/52i/nm+0/4ybBmAF4hzR8CNHC75qEhjHo=",
+        "lastModified": 1761468971,
+        "narHash": "sha256-vY2OLVg5ZTobdroQKQQSipSIkHlxOTrIF1fsMzPh8w8=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "481cf557888e05d3128a76f14c76397b7d7cc869",
+        "rev": "78e34d1667d32d8a0ffc3eba4591ff256e80576e",
         "type": "github"
       },
       "original": {
@@ -118,7 +118,42 @@
       "inputs": {
         "disko": "disko",
         "nixos-raspberrypi": "nixos-raspberrypi",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "vencloud": "vencloud"
+      }
+    },
+    "vencloud": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "vencloud": "vencloud_2"
+      },
+      "locked": {
+        "path": "./pkgs/vencloud",
+        "type": "path"
+      },
+      "original": {
+        "path": "./pkgs/vencloud",
+        "type": "path"
+      },
+      "parent": []
+    },
+    "vencloud_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1744020541,
+        "narHash": "sha256-6BVkeWbbAzbdU33eUYxmEQBg9Y/gUxyQRqO5qNXY274=",
+        "owner": "Vencord",
+        "repo": "Vencloud",
+        "rev": "849c44d858379f5f8686b795588213c958f072b3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Vencord",
+        "ref": "main",
+        "repo": "Vencloud",
+        "type": "github"
       }
     }
   },
