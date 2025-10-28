@@ -44,7 +44,6 @@
     bindMounts = {
       "/run/secrets/vencloud.env:idmap" = {
         hostPath = "/etc/nixos/auth/vencloud.env";
-        isReadOnly = false;
       };
 
     };

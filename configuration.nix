@@ -74,6 +74,11 @@
     options = [ "bind" ];
   };
   services.caddy.enable = true;
+  networking.nat = {
+    enable = true;
+    internalInterfaces = [ "ve-+" ];
+    externalInterface = "end0";
+  };
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
