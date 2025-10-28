@@ -35,6 +35,7 @@
       services.redis.servers."" = {
         enable = true;
         save = [ [ 300 1 ] [ 60 10 ] ];
+        unixSocket = null;
       };
 
       system.stateVersion = "25.05";
