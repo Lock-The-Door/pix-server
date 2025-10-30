@@ -24,7 +24,11 @@
           dialect = "sqlite3";
         };
         settings = {
-          server = { public_url = "https://pix.pug-squeaker.ts.net:3000"; };
+          server = {
+            listen_ipv4 = "0.0.0.0";
+            listen_ipv6 = "::";
+            public_url = "https://pix.pug-squeaker.ts.net:3000";
+          };
           app = { leaderboard_enabled = false; };
           security = {
             allow_signup = false;
