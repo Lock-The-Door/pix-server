@@ -10,7 +10,7 @@
             boot = {
               priority = 1;
               start = "1M";
-              end = "256M";
+              end = "512M";
               type = "EF00";
               content = {
                 type = "filesystem";
