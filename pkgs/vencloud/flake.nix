@@ -67,7 +67,8 @@
             redisService = mkOption {
               type = types.str;
               default = "redis.service";
-              description = "The name of the systemd redis service vencloud should depend on";
+              description =
+                "The name of the systemd redis service vencloud should depend on";
             };
 
             settings = mkOption {

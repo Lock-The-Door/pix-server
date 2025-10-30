@@ -54,6 +54,7 @@
                   "/data/technitium" = { };
                   "/data/vikunja" = { };
                   "/data/vencloud" = { };
+                  "/data/wakapi" = { };
                   # Subvolume for the swapfile
                   "/swap" = {
                     mountpoint = "/.swap";
