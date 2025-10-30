@@ -29,7 +29,7 @@
             allow_signup = false;
             disable_frontpage = true;
             insecure_cookies = false;
-            trust_reverse_proxy_ips = [ "192.168.102.10" ];
+            trust_reverse_proxy_ips = "192.168.102.10";
           };
           db = { name = "/var/lib/wakapi"; };
         };
