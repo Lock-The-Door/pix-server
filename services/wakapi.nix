@@ -31,7 +31,6 @@
             insecure_cookies = false;
             trust_reverse_proxy_ips = "192.168.102.10";
           };
-          db = { name = "/var/lib/wakapi"; };
         };
       };
 
