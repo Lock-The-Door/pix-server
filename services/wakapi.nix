@@ -19,10 +19,6 @@
       services.wakapi = {
         enable = true;
         passwordSaltFile = "/run/secrets/wakapi/password_pepper.env";
-        database = {
-          name = "/var/lib/wakapi/wakapi.db";
-          dialect = "sqlite3";
-        };
         settings = {
           server = {
             listen_ipv4 = "-";
@@ -35,6 +31,10 @@
             disable_frontpage = true;
             insecure_cookies = false;
             trust_reverse_proxy_ips = "192.168.102.10";
+          };
+          database = {
+            name = "/var/lib/wakapi/wakapi.db";
+            dialect = "sqlite3";
           };
         };
       };
