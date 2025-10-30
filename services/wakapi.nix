@@ -31,17 +31,15 @@
             insecure_cookies = false;
             trust_reverse_proxy_ips = [ "192.168.102.10" ];
           };
-          db = {
-            name = "/var/lib/wakapi";
-          };
+          db = { name = "/var/lib/wakapi"; };
         };
       };
+
+      system.stateVersion = "25.05";
     };
 
     bindMounts = {
-      "/run/secrets/wakapi:idmap" = {
-        hostPath = "/etc/nixos/auth/wakapi";
-      };
+      "/run/secrets/wakapi:idmap" = { hostPath = "/etc/nixos/auth/wakapi"; };
       "/var/lib/private/wakapi:idmap" = {
         hostPath = "/data/wakapi";
         isReadOnly = false;
