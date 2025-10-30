@@ -15,6 +15,7 @@
     localAddress = "192.168.102.100";
 
     config = { ... }: {
+      networking.firewall.allowedTCPPorts = [ 3000 ];
       services.wakapi = {
         enable = true;
         passwordSaltFile = "/run/secrets/wakapi/password_pepper.env";
