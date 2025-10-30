@@ -25,7 +25,6 @@
         };
         settings = {
           server = {
-            listen_ipv4 = "0.0.0.0";
             listen_ipv6 = "::";
             public_url = "https://pix.pug-squeaker.ts.net:3000";
           };
