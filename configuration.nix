@@ -9,6 +9,7 @@
     ./services/technitium.nix
     ./services/vikunja.nix
     ./services/vencloud.nix
+    ./services/wakapi.nix
   ];
 
   networking.hostName = "pix"; # Define your hostname.
