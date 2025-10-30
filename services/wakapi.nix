@@ -32,7 +32,7 @@
             insecure_cookies = false;
             trust_reverse_proxy_ips = "192.168.102.10";
           };
-          database = {
+          db = {
             name = "/var/lib/wakapi/wakapi.db";
             dialect = "sqlite3";
           };
