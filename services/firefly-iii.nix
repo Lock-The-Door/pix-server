@@ -34,7 +34,6 @@ in { pkgs, ... }: {
            	root * ${pkgs.firefly-iii}/public
             php_fastcgi unix//run/phpfpm/firefly-iii.sock {
               capture_stderr
-              env modHeadersAvailable true
             }
             file_server
           }
