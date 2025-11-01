@@ -3,6 +3,9 @@ in { pkgs, ... }: {
   services.caddy.virtualHosts."pix.pug-squeaker.ts.net:8024" = {
     extraConfig = "reverse_proxy 192.168.103.100:80";
   };
+  services.caddy.virtualHosts."pix.pug-squeaker.ts.net:8025" = {
+    extraConfig = "reverse_proxy 192.168.103.100:8080";
+  };
   networking.firewall.allowedTCPPorts = [ 8024 ];
 
   containers.firefly-iii = {
@@ -16,7 +19,7 @@ in { pkgs, ... }: {
     localAddress = "192.168.103.100";
 
     config = { ... }: {
-      networking.firewall.allowedTCPPorts = [ 80 ];
+      networking.firewall.allowedTCPPorts = [ 80 8080 ];
 
       services.caddy = {
         enable = true;
@@ -27,7 +30,7 @@ in { pkgs, ... }: {
           }
         '';
         extraConfig = ''
-          :80 {
+          :8080 {
            	root * ${pkgs.firefly-iii}/public
             php_fastcgi unix//run/phpfpm/firefly-iii.sock {
               capture_stderr
@@ -41,6 +44,8 @@ in { pkgs, ... }: {
       services.firefly-iii = {
         enable = true;
         dataDir = "/var/lib/firefly-iii/app";
+        virtualHost = fireflyUrl;
+        enableNginx = true;
         settings = {
           APP_ENV = "production";
           APP_URL = fireflyUrl;
