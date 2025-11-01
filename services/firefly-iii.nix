@@ -74,7 +74,7 @@ in { pkgs, ... }: {
       "/run/secrets/firefly-iii:idmap" = {
         hostPath = "/etc/nixos/auth/firefly-iii";
       };
-      "/var/lib/private/firefly-iii:idmap" = {
+      "/var/lib/firefly-iii:idmap" = {
         hostPath = "/data/firefly-iii";
         isReadOnly = false;
       };
