@@ -10,6 +10,7 @@
     ./services/vikunja.nix
     ./services/vencloud.nix
     ./services/wakapi.nix
+    ./services/firefly-iii.nix
   ];
 
   networking.hostName = "pix"; # Define your hostname.
