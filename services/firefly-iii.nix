@@ -23,7 +23,7 @@ in { pkgs, ... }: {
 
       services.caddy = {
         enable = true;
-        group = "firefly-iii";
+        group = "nginx";
         globalConfig = ''
           servers {
           	trusted_proxies static private_ranges
