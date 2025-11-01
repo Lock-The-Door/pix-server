@@ -32,7 +32,7 @@ in { pkgs, ... }: {
             encode
 
             @phpPath path_regexp phpPath ^/.+\.php(/?.*)$
-            redir @phpPath {re.phpPath.1} 308
+            redir @phpPath /{re.phpPath.1} 308
 
             php_fastcgi unix//run/phpfpm/firefly-iii.sock {
               rewrite /index.php/{path}
