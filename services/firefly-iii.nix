@@ -1,24 +1,9 @@
 let fireflyUrl = "https://pix.pug-squeaker.ts.net:8024";
 in { pkgs, ... }: {
   services.caddy.virtualHosts."pix.pug-squeaker.ts.net:8024" = {
-    extraConfig = "php_fastcgi unix//run/container_firefly-iii/firefly-iii.sock";
+    extraConfig = "reverse_proxy 192.168.103.100:80";
   };
   networking.firewall.allowedTCPPorts = [ 8024 ];
-
-  systemd.services.firefly-iii-socket = {
-    description =
-      "Prepare a socket directory in /run to mount to Firefly III owned by caddy";
-    before = [ "containers@firefly-iii.service" ];
-    wantedBy = [ "containers@firefly-iii.service" ];
-
-    serviceConfig = {
-      Type = "oneshot";
-      RuntimeDirectory = "container_firefly-iii";
-      RuntimeDirectoryMode = "611";
-      RuntimeDirectoryPreserve=true;
-      ExecStart = "${pkgs.coreutils}/bin/true";
-    };
-  };
 
   containers.firefly-iii = {
     # Default container options
@@ -33,7 +18,22 @@ in { pkgs, ... }: {
     config = { ... }: {
       networking.firewall.allowedTCPPorts = [ 80 ];
 
-      environment.defaultPackages = with pkgs; [ nmap ];
+      services.caddy = {
+        enable = true;
+        globalConfig = ''
+        	{
+         		servers {
+           		trusted_proxies static private_ranges
+            }
+          }
+          :80 {
+           	root * ${pkgs.firefly-iii}/public
+           	encode
+            php_fastcgi *.php /run/phpfpm/firefly-iii.sock
+            file_server
+          }
+        '';
+      };
 
       services.firefly-iii = {
         enable = true;
