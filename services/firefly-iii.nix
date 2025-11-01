@@ -85,7 +85,7 @@ in { pkgs, ... }: {
       systemd.tmpfiles.rules = [
         "d /run/firefly-iii-data/database 0700 firefly-iii firefly-iii"
         "d /run/firefly-iii-data/upload 0700 firefly-iii firefly-iii"
-      ]
+      ];
 
       system.stateVersion = "25.05";
     };
