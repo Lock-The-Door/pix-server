@@ -29,7 +29,9 @@ in { pkgs, ... }: {
         extraConfig = ''
           :80 {
            	root * ${pkgs.firefly-iii}/public
-            php_fastcgi unix//run/phpfpm/firefly-iii.sock
+            php_fastcgi unix//run/phpfpm/firefly-iii.sock {
+              capture_stderr
+            }
             file_server
           }
         '';
