@@ -1,6 +1,6 @@
 { ... }: {
   services.caddy.virtualHosts."pix.pug-squeaker.ts.net:8024" = {
-    extraConfig = "reverse_proxy 192.168.103.100:8080";
+    extraConfig = "reverse_proxy 192.168.103.100:80";
   };
   networking.firewall.allowedTCPPorts = [ 8024 ];
 
@@ -15,7 +15,7 @@
     localAddress = "192.168.103.100";
 
     config = { ... }: {
-      networking.firewall.allowedTCPPorts = [ 8080 ];
+      networking.firewall.allowedTCPPorts = [ 80 ];
 
       services.firefly-iii = {
         enable = true;
