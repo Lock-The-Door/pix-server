@@ -47,9 +47,7 @@ in { pkgs, ... }: {
         virtualHost = "pix.pug-squeaker.ts.net:8025";
         enableNginx = true;
         poolConfig = {
-          settings = {
-            "access.log" = "/tmp/php-fpm.access.log";
-          };
+          "access.log" = "/tmp/php-fpm.access.log";
         };
         settings = {
           APP_ENV = "production";
