@@ -41,8 +41,6 @@ in { pkgs, ... }: {
         '';
       };
 
-      services.nginx.virtualHosts."pix.pug-squeaker.ts.net:8025".
-
       services.firefly-iii = {
         enable = true;
         dataDir = "/var/lib/firefly-iii/app";
