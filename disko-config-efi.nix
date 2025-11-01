@@ -56,6 +56,7 @@
                   "/data/vikunja" = { };
                   "/data/vencloud" = { };
                   "/data/wakapi" = { };
+                  "/data/firefly-iii" = { };
                   # Subvolume for the swapfile
                   "/swap" = {
                     mountpoint = "/.swap";
