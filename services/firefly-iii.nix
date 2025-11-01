@@ -22,17 +22,17 @@ in { pkgs, ... }: {
         enable = true;
         group = "firefly-iii";
         globalConfig = ''
-          	{
-           		servers {
-             		trusted_proxies static private_ranges
-              }
-            }
-            :80 {
-             	root * ${pkgs.firefly-iii}/public
-             	encode
-              php_fastcgi *.php /run/phpfpm/firefly-iii.sock
-              file_server
-            }
+          servers {
+          	trusted_proxies static private_ranges
+          }
+        '';
+        extraConfig = ''
+          :80 {
+           	root * ${pkgs.firefly-iii}/public
+           	encode
+            php_fastcgi *.php /run/phpfpm/firefly-iii.sock
+            file_server
+          }
         '';
       };
 
