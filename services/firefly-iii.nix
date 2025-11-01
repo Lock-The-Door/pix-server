@@ -20,18 +20,19 @@ in { pkgs, ... }: {
 
       services.caddy = {
         enable = true;
+        group = "firefly-iii";
         globalConfig = ''
-        	{
-         		servers {
-           		trusted_proxies static private_ranges
+          	{
+           		servers {
+             		trusted_proxies static private_ranges
+              }
             }
-          }
-          :80 {
-           	root * ${pkgs.firefly-iii}/public
-           	encode
-            php_fastcgi *.php /run/phpfpm/firefly-iii.sock
-            file_server
-          }
+            :80 {
+             	root * ${pkgs.firefly-iii}/public
+             	encode
+              php_fastcgi *.php /run/phpfpm/firefly-iii.sock
+              file_server
+            }
         '';
       };
 
@@ -58,6 +59,7 @@ in { pkgs, ... }: {
         "firefly-iii/app";
       services.firefly-iii-data-importer = {
         enable = true;
+        group = "firefly-iii";
         dataDir = "/var/lib/firefly-iii/importer";
         settings = { FIREFLY_III_URL = fireflyUrl; };
       };
@@ -70,10 +72,6 @@ in { pkgs, ... }: {
     bindMounts = {
       "/run/secrets/firefly-iii:idmap" = {
         hostPath = "/etc/nixos/auth/firefly-iii";
-      };
-      "/run/phpfpm:idmap" = {
-        hostPath = "/run/container_firefly-iii";
-        isReadOnly = false;
       };
       "/var/lib/private/firefly-iii:idmap" = {
         hostPath = "/data/firefly-iii";
