@@ -28,11 +28,9 @@ in { pkgs, ... }: {
         '';
         extraConfig = ''
           :80 {
-           	encode
+           	root * ${pkgs.firefly-iii}/public
             php_fastcgi unix//run/phpfpm/firefly-iii.sock
-            file_server {
-            	root ${pkgs.firefly-iii}/public
-            }
+            file_server
           }
         '';
       };
@@ -40,8 +38,6 @@ in { pkgs, ... }: {
       services.firefly-iii = {
         enable = true;
         dataDir = "/var/lib/firefly-iii/app";
-        virtualHost = "https://pix-pug-squeaker.ts.net:8024";
-        enableNginx = true;
         settings = {
           APP_ENV = "production";
           APP_URL = fireflyUrl;
