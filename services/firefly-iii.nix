@@ -30,7 +30,7 @@ in { pkgs, ... }: {
           :80 {
            	root * ${pkgs.firefly-iii}/public
            	encode
-            php_fastcgi *.php /run/phpfpm/firefly-iii.sock
+            php_fastcgi *.php unix//run/phpfpm/firefly-iii.sock
             file_server
           }
         '';
