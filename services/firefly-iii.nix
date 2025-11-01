@@ -15,6 +15,7 @@ in { pkgs, ... }: {
       Type = "oneshot";
       RuntimeDirectory = "container_firefly-iii";
       RuntimeDirectoryMode = "611";
+      ExecStart = "${pkgs.coreutils}/bin/true";
     };
   };
 
