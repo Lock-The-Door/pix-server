@@ -60,6 +60,7 @@ in { pkgs, ... }: {
           MAP_DEFAULT_LONG = "-79.387222";
           MAP_DEFAULT_ZOOM = "6";
           VALID_URL_PROTOCOLS = "http, https, mailto";
+          TRUSTED_PROXIES = "*";
         };
       };
       systemd.services.firefly-iii.serviceConfig.StateDirectory =
