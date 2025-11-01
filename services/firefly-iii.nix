@@ -41,7 +41,7 @@ in { pkgs, ... }: {
         '';
       };
 
-      services.phpfpm.pools.firefly-iii.settings."access.log" = "syslog";
+      services.phpfpm.pools.firefly-iii.settings."access.log" = "/tmp/firefly-iii-access.log";
 
       services.firefly-iii = {
         enable = true;
