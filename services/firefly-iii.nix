@@ -23,6 +23,7 @@ in { pkgs, ... }: {
 
       services.caddy = {
         enable = true;
+        user = "nginx";
         group = "nginx";
         globalConfig = ''
           servers {
@@ -32,7 +33,7 @@ in { pkgs, ... }: {
         extraConfig = ''
           :8080 {
            	root * ${pkgs.firefly-iii}/public
-            php_fastcgi unix//run/phpfpm/firefly-iii.sock {
+            php_fastcgi ${config.services.phpfpm.pools.firefly-iii.socket} {
               capture_stderr
             }
             file_server
@@ -40,11 +41,14 @@ in { pkgs, ... }: {
         '';
       };
 
+      services.nginx.virtualHosts."pix.pug-squeaker.ts.net:8025".
+
       services.firefly-iii = {
         enable = true;
         dataDir = "/var/lib/firefly-iii/app";
-        virtualHost = fireflyUrl;
+        virtualHost = "pix.pug-squeaker.ts.net:8025";
         enableNginx = true;
+        poolConfig.settings."access.log" = /tmp/php-fpm.access.log;
         settings = {
           APP_ENV = "production";
           APP_URL = fireflyUrl;
