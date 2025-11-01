@@ -38,7 +38,8 @@ in { pkgs, ... }: {
               rewrite /index.php/{path}
               capture_stderr
             }
-            file_server not *.php
+            @static not *.php
+            file_server @static
           }
         '';
       };
