@@ -25,7 +25,7 @@
         settings = {
           APP_ENV = "production";
           APP_URL = "https://pix.pug-squeaker.ts.net:8024";
-          APP_KEY_FILE = "/var/secrets/firefly-iii";
+          APP_KEY_FILE = "/run/secrets/firefly-iii";
           TZ = "America/Toronto";
           COOKIE_DOMAIN = "https://pix.pug-squeaker.ts.net:8024";
           COOKIE_SECURE = "true";
