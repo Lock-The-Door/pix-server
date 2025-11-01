@@ -41,11 +41,9 @@ in { pkgs, ... }: {
         '';
       };
 
-      services.phpfpm.pools.firefly-iii.settings."access.log" = "/tmp/firefly-iii-access.log";
-
       services.firefly-iii = {
         enable = true;
-        dataDir = "/var/lib/firefly-iii/app";
+        # dataDir = "/var/lib/firefly-iii/app";
         virtualHost = "pix.pug-squeaker.ts.net:8025";
         enableNginx = true;
         settings = {
