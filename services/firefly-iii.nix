@@ -20,8 +20,6 @@
       services.firefly-iii = {
         enable = true;
         dataDir = "/var/lib/firefly-iii/app";
-        user = "firefly-iii";
-        group = "firefly-iii";
         settings = {
           APP_ENV = "production";
           APP_URL = "https://pix.pug-squeaker.ts.net:8024";
@@ -38,15 +36,14 @@
           VALID_URL_PROTOCOLS = "http, https, mailto";
         };
       };
+      systemd.services.firefly-iii.serviceConfig.StateDirectory = "firefly-iii/app";
       services.firefly-iii-data-importer = {
         enable = true;
         dataDir = "/var/lib/firefly-iii/importer";
-        user = "firefly-iii";
-        group = "firefly-iii";
         settings = { FIREFLY_III_URL = "http://localhost:8080"; };
       };
       systemd.services.firefly-iii-data-importer.serviceConfig.StateDirectory =
-        "firefly-iii";
+        "firefly-iii/importer";
 
       system.stateVersion = "25.05";
     };
