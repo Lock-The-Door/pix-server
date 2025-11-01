@@ -57,7 +57,7 @@ in { pkgs, ... }: {
       systemd.services.firefly-iii.serviceConfig.StateDirectory =
         "firefly-iii/app";
       services.firefly-iii-data-importer = {
-        enable = true;
+        enable = false;
         # group = "firefly-iii";
         dataDir = "/var/lib/firefly-iii/importer";
         settings = { FIREFLY_III_URL = fireflyUrl; };
