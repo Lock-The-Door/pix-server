@@ -41,6 +41,8 @@ in { pkgs, ... }: {
         '';
       };
 
+      services.phpfpm.pools.firefly-iii.settings."access.log" = "syslog";
+
       services.firefly-iii = {
         enable = true;
         dataDir = "/var/lib/firefly-iii/app";
