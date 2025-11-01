@@ -38,7 +38,7 @@ in { pkgs, ... }: {
       services.firefly-iii = {
         enable = true;
         dataDir = "/var/lib/firefly-iii/app";
-        virtualHost = "pix-pug-squeaker.ts.net:8024";
+        virtualHost = "https://pix-pug-squeaker.ts.net:8024";
         enableNginx = true;
         settings = {
           APP_ENV = "production";
