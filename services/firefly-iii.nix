@@ -30,6 +30,7 @@ in { pkgs, ... }: {
           :80 {
            	root * ${pkgs.firefly-iii}/public
             php_fastcgi unix//run/phpfpm/firefly-iii.sock {
+              try_files index.php/{path}
               capture_stderr
             }
             file_server
