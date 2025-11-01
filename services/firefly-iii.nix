@@ -29,11 +29,16 @@ in { pkgs, ... }: {
         extraConfig = ''
           :80 {
            	root * ${pkgs.firefly-iii}/public
+            encode
+
+            @phpPath path_regexp phpPath ^/.+\.php(/?.*)$
+            redir @phpPath {re.phpPath.1} 308
+
             php_fastcgi unix//run/phpfpm/firefly-iii.sock {
-              try_files index.php/{path}
+              rewrite /index.php/{path}
               capture_stderr
             }
-            file_server
+            file_server not *.php
           }
         '';
       };
