@@ -33,7 +33,7 @@ in { pkgs, ... }: {
         extraConfig = ''
           :8080 {
            	root * ${pkgs.firefly-iii}/public
-            php_fastcgi ${config.services.phpfpm.pools.firefly-iii.socket} {
+            php_fastcgi unix//run/phpfpm/firefly-iii.sock {
               capture_stderr
             }
             file_server
