@@ -46,9 +46,6 @@ in { pkgs, ... }: {
         dataDir = "/var/lib/firefly-iii/app";
         virtualHost = "pix.pug-squeaker.ts.net:8025";
         enableNginx = true;
-        poolConfig = {
-          "access.log" = "/tmp/php-fpm.access.log";
-        };
         settings = {
           APP_ENV = "production";
           APP_URL = fireflyUrl;
