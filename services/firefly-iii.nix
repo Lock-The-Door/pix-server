@@ -19,19 +19,18 @@ in { pkgs, ... }: {
     localAddress = "192.168.103.100";
 
     config = { ... }: {
-      networking.firewall.allowedTCPPorts = [ 80 8080 ];
+      networking.firewall.allowedTCPPorts = [ 80 ];
 
       services.caddy = {
         enable = true;
-        user = "nginx";
-        group = "nginx";
+        group = "firefly-iii";
         globalConfig = ''
           servers {
           	trusted_proxies static private_ranges
           }
         '';
         extraConfig = ''
-          :8080 {
+          :80 {
            	root * ${pkgs.firefly-iii}/public
             php_fastcgi unix//run/phpfpm/firefly-iii.sock {
               capture_stderr
@@ -43,9 +42,6 @@ in { pkgs, ... }: {
 
       services.firefly-iii = {
         enable = true;
-        # dataDir = "/var/lib/firefly-iii/app";
-        virtualHost = "pix.pug-squeaker.ts.net:8025";
-        enableNginx = true;
         settings = {
           APP_ENV = "production";
           APP_URL = fireflyUrl;
@@ -68,11 +64,28 @@ in { pkgs, ... }: {
       services.firefly-iii-data-importer = {
         enable = false;
         # group = "firefly-iii";
-        dataDir = "/var/lib/firefly-iii/importer";
         settings = { FIREFLY_III_URL = fireflyUrl; };
       };
       systemd.services.firefly-iii-data-importer.serviceConfig.StateDirectory =
         "firefly-iii/importer";
+
+
+      fileSystems."/var/lib/firefly-iii/storage/database" = {
+        depends = [ "/run/firefly-iii-data" ];
+        device = "/run/firefly-iii-data/database";
+        fsType = "none";
+        options = [ "bind" ];
+      };
+      fileSystems."/var/lib/firefly-iii/storage/upload" = {
+        depends = [ "/run/firefly-iii-data" ];
+        device = "/run/firefly-iii-data/upload";
+        fsType = "none";
+        options = [ "bind" ];
+      };
+      systemd.tmpfiles.rules = [
+        "d /run/firefly-iii-data/database 0700 firefly-iii firefly-iii"
+        "d /run/firefly-iii-data/upload 0700 firefly-iii firefly-iii"
+      ]
 
       system.stateVersion = "25.05";
     };
@@ -81,7 +94,7 @@ in { pkgs, ... }: {
       "/run/secrets/firefly-iii:idmap" = {
         hostPath = "/etc/nixos/auth/firefly-iii";
       };
-      "/var/lib/firefly-iii:idmap" = {
+      "/run/firefly-iii-data:idmap" = {
         hostPath = "/data/firefly-iii";
         isReadOnly = false;
       };
