@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   services.caddy.virtualHosts."pix.pug-squeaker.ts.net:8024" = {
     extraConfig = "reverse_proxy 192.168.103.100:80";
   };
@@ -16,6 +16,8 @@
 
     config = { ... }: {
       networking.firewall.allowedTCPPorts = [ 80 ];
+
+      environment.defaultPackages = with pkgs; [ nmap ];
 
       services.firefly-iii = {
         enable = true;
@@ -36,7 +38,8 @@
           VALID_URL_PROTOCOLS = "http, https, mailto";
         };
       };
-      systemd.services.firefly-iii.serviceConfig.StateDirectory = "firefly-iii/app";
+      systemd.services.firefly-iii.serviceConfig.StateDirectory =
+        "firefly-iii/app";
       services.firefly-iii-data-importer = {
         enable = true;
         dataDir = "/var/lib/firefly-iii/importer";
