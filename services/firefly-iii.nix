@@ -48,11 +48,13 @@ in { pkgs, ... }: {
               file_server @static
             }
 
-            php_fastcgi unix//run/phpfpm/firefly-iii.sock {
-              rewrite /index.php/{path}
-              capture_stderr
+            handle {
+              php_fastcgi unix//run/phpfpm/firefly-iii.sock {
+                rewrite /index.php/{path}
+                capture_stderr
+              }
+              file_server @static
             }
-            file_server @static
           }
         '';
       };
