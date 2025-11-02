@@ -77,8 +77,6 @@ in { pkgs, ... }: {
           TRUSTED_PROXIES = "*";
         };
       };
-      systemd.services.firefly-iii.serviceConfig.StateDirectory =
-        "firefly-iii/app";
       services.firefly-iii-data-importer = {
         enable = true;
         group = "firefly-iii";
@@ -89,8 +87,6 @@ in { pkgs, ... }: {
           TRUSTED_PROXIES = "*";
         };
       };
-      systemd.services.firefly-iii-data-importer.serviceConfig.StateDirectory =
-        "firefly-iii/importer";
 
       fileSystems."/var/lib/firefly-iii/storage/database" = {
         depends = [ "/run/firefly-iii-data" ];
