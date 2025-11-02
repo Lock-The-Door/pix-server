@@ -3,6 +3,9 @@ in { pkgs, ... }: {
   services.caddy.virtualHosts."pix.pug-squeaker.ts.net:8024" = {
     extraConfig = "reverse_proxy 192.168.103.100:80";
   };
+  services.caddy.virtualHosts."pix.pug-squeaker.ts.net:8025" = {
+    extraConfig = "reverse_proxy 192.168.103.100:8080";
+  };
   networking.firewall.allowedTCPPorts = [ 8024 ];
 
   containers.firefly-iii = {
@@ -41,7 +44,7 @@ in { pkgs, ... }: {
               root * ${pkgs.firefly-iii-data-importer}/public
               encode
 
-              php_fastcgi unix//run/phpfpm/firefly-iii.sock {
+              php_fastcgi unix//run/phpfpm/firefly-iii-data-importer.sock {
                 rewrite /index.php/{path}
                 capture_stderr
               }
