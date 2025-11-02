@@ -33,16 +33,14 @@ in { pkgs, ... }: {
         '';
         extraConfig = ''
           :80 {
-           	root * ${pkgs.firefly-iii}/public
             encode
 
             @phpPath path_regexp phpPath ^/.+\.php(/?.*)$
-            redir @phpPath /{re.phpPath.1} 308
             @static not path *.php
 
             handle_path /data-importer/* {
               root * ${pkgs.firefly-iii-data-importer}/public
-              encode
+              redir @phpPath /data-importer/{re.phpPath.1} 308
 
               php_fastcgi unix//run/phpfpm/firefly-iii-data-importer.sock {
                 rewrite /index.php/{path}
@@ -52,6 +50,9 @@ in { pkgs, ... }: {
             }
 
             handle {
+             	root * ${pkgs.firefly-iii}/public
+              redir @phpPath /{re.phpPath.1} 308
+
               php_fastcgi unix//run/phpfpm/firefly-iii.sock {
                 rewrite /index.php/{path}
                 capture_stderr
