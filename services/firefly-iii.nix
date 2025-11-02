@@ -35,12 +35,23 @@ in { pkgs, ... }: {
 
             @phpPath path_regexp phpPath ^/.+\.php(/?.*)$
             redir @phpPath /{re.phpPath.1} 308
+            @static not path *.php
+
+            handle_path /data-importer {
+              root * ${pkgs.firefly-iii-data-importer}/public
+              encode
+
+              php_fastcgi unix//run/phpfpm/firefly-iii.sock {
+                rewrite /index.php/{path}
+                capture_stderr
+              }
+              file_server @static
+            }
 
             php_fastcgi unix//run/phpfpm/firefly-iii.sock {
               rewrite /index.php/{path}
               capture_stderr
             }
-            @static not path *.php
             file_server @static
           }
         '';
@@ -69,7 +80,12 @@ in { pkgs, ... }: {
       services.firefly-iii-data-importer = {
         enable = true;
         group = "firefly-iii";
-        settings = { FIREFLY_III_URL = fireflyUrl; };
+        settings = {
+          FIREFLY_III_URL = fireflyUrl;
+          APP_ENV = "production";
+          TZ = "America/Toronto";
+          TRUSTED_PROXIES = "*";
+        };
       };
       systemd.services.firefly-iii-data-importer.serviceConfig.StateDirectory =
         "firefly-iii/importer";
