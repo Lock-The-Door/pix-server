@@ -37,7 +37,7 @@ in { pkgs, ... }: {
             redir @phpPath /{re.phpPath.1} 308
             @static not path *.php
 
-            handle_path /data-importer {
+            handle_path /data-importer/* {
               root * ${pkgs.firefly-iii-data-importer}/public
               encode
 
