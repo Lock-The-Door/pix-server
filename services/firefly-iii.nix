@@ -17,7 +17,7 @@ in { pkgs, ... }: {
 
     config = { ... }: {
       networking.firewall.allowedTCPPorts = [ 80 ];
-      i18n.defaultLocale = "en_CA.UTF-8/UTF-8";
+      i18n.defaultLocale = "en_CA.UTF-8";
       i18n.extraLocales = [ "en_US.UTF-8/UTF-8" ];
 
       services.caddy = {
