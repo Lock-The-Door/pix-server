@@ -90,7 +90,6 @@ in { pkgs, ... }: {
       systemd.services.firefly-iii-data-importer.serviceConfig.StateDirectory =
         "firefly-iii/importer";
 
-
       fileSystems."/var/lib/firefly-iii/storage/database" = {
         depends = [ "/run/firefly-iii-data" ];
         device = "/run/firefly-iii-data/database";
