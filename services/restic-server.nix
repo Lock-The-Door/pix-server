@@ -19,8 +19,8 @@
       socketConfig = { Service = "container@restic-server"; };
     };
     services."container@restic-server" = {
-      after = "backup.automount";
-      requires = "backup.automount";
+      after = [ "backup.automount" ];
+      requires = [ "backup.automount" ];
     };
   };
 
