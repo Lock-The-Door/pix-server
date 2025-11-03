@@ -37,7 +37,7 @@
       services.restic.server = {
         enable = true;
         listenAddress = "unix:/run/restic-server.sock";
-        extraFlags = "--no-auth";
+        extraFlags = [ "--no-auth" ];
       };
     };
 
