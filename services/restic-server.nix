@@ -24,6 +24,10 @@
     };
   };
 
+  services.caddy.virtualHosts."pix.pug-squeaker.ts.net:5022" = {
+    extraConfig = "reverse_proxy unix//run/restic-server.sock";
+  };
+
   containers."restic-server" = {
     autoStart = false;
     ephemeral = true;
@@ -39,6 +43,8 @@
         listenAddress = "unix:/run/restic-server.sock";
         extraFlags = [ "--no-auth" ];
       };
+
+      system.stateVersion = "25.05";
     };
 
     bindMounts = {
