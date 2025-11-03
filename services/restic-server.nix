@@ -6,11 +6,9 @@
     mounts = [{
       what = "/dev/disk/by-label/Backup";
       type = "xfs";
-      name = "backup.mount";
       where = "/mnt/backup";
     }];
     automounts = [{
-      name = "backup.automount";
       where = "/mnt/backup";
       automountConfig = { TimeoutIdleSec = 300; };
     }];
@@ -19,8 +17,8 @@
       socketConfig = { Service = "container@restic-server"; };
     };
     services."container@restic-server" = {
-      after = [ "backup.automount" ];
-      requires = [ "backup.automount" ];
+      after = [ "mnt-backup.automount" ];
+      requires = [ "mnt-backup.automount" ];
     };
   };
 
