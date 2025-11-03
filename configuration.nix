@@ -11,6 +11,7 @@
     ./services/vencloud.nix
     ./services/wakapi.nix
     ./services/firefly-iii.nix
+    ./services/restic-server.nix
   ];
 
   networking.hostName = "pix"; # Define your hostname.
