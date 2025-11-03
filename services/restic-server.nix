@@ -14,7 +14,7 @@
     }];
     sockets."restic-backup" = {
       listenStreams = [ "/run/restic-server.sock" ];
-      socketConfig = { Service = "container@restic-server"; };
+      socketConfig = { Service = "container@restic-server.service"; };
     };
     services."container@restic-server" = {
       after = [ "mnt-backup.automount" ];
