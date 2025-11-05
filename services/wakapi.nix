@@ -1,6 +1,6 @@
 { ... }: {
   services.caddy.virtualHosts."pix.pug-squeaker.ts.net:3000" = {
-    extraConfig = "reverse_proxy 192.168.102.100:3000";
+    extraConfig = "reverse_proxy 192.168.69.2:3000";
   };
   networking.firewall.allowedTCPPorts = [ 3000 ];
 
@@ -11,8 +11,8 @@
     privateNetwork = true;
     privateUsers = "pick";
 
-    hostAddress = "192.168.102.10";
-    localAddress = "192.168.102.100";
+    hostAddress = "192.168.67.2";
+    localAddress = "192.168.69.2";
 
     config = { ... }: {
       networking.firewall.allowedTCPPorts = [ 3000 ];

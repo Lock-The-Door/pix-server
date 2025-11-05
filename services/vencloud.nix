@@ -4,7 +4,7 @@
   ];
 
   services.caddy.virtualHosts."pix.pug-squeaker.ts.net:8012" = {
-    extraConfig = "reverse_proxy 192.168.101.100:8080";
+    extraConfig = "reverse_proxy 192.168.69.1:8080";
   };
   networking.firewall.allowedTCPPorts = [ 8012 ];
 
@@ -15,8 +15,8 @@
     privateNetwork = true;
     privateUsers = "pick";
 
-    hostAddress = "192.168.101.10";
-    localAddress = "192.168.101.100";
+    hostAddress = "192.168.67.1";
+    localAddress = "192.168.69.1";
 
     config = { ... }: {
       imports = [ vencloud.nixosModules.vencloud ];

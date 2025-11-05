@@ -1,10 +1,7 @@
 let fireflyUrl = "https://pix.pug-squeaker.ts.net:8024";
 in { pkgs, ... }: {
   services.caddy.virtualHosts."pix.pug-squeaker.ts.net:8024" = {
-    extraConfig = "reverse_proxy 192.168.103.100:80";
-  };
-  services.caddy.virtualHosts."pix.pug-squeaker.ts.net:8025" = {
-    extraConfig = "reverse_proxy 192.168.103.100:8080";
+    extraConfig = "reverse_proxy 192.168.69.3:80";
   };
   networking.firewall.allowedTCPPorts = [ 8024 ];
 
@@ -15,8 +12,8 @@ in { pkgs, ... }: {
     privateNetwork = true;
     privateUsers = "pick";
 
-    hostAddress = "192.168.103.10";
-    localAddress = "192.168.103.100";
+    hostAddress = "192.168.67.3";
+    localAddress = "192.168.69.3";
 
     config = { ... }: {
       networking.firewall.allowedTCPPorts = [ 80 ];
