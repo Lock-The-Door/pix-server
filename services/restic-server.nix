@@ -32,8 +32,8 @@
     privateNetwork = true;
     privateUsers = "pick";
 
-    hostAddress = "192.168.104.10";
-    localAddress = "192.168.104.100";
+    hostAddress = "192.168.67.4";
+    localAddress = "192.168.69.4";
 
     config = { ... }: {
       services.restic.server = {
