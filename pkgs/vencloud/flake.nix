@@ -10,7 +10,6 @@
 
   outputs = { self, nixpkgs, vencloud }:
     let
-
       # to work with older version of flakes
       lastModifiedDate =
         self.lastModifiedDate or self.lastModified or "19700101";
@@ -27,9 +26,7 @@
 
       # Nixpkgs instantiated for supported system types.
       nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
-
     in {
-
       # Provide some binary packages for selected system types.
       packages = forAllSystems (system:
         let pkgs = nixpkgsFor.${system};
