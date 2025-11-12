@@ -7,11 +7,12 @@
 {
   imports = [
     ./services/technitium.nix
-    ./services/vikunja.nix
-    ./services/vencloud.nix
-    ./services/wakapi.nix
-    ./services/firefly-iii.nix
-    ./services/restic-server.nix
+    ./services/vikunja.nix # 0
+    ./services/vencloud.nix # 1
+    ./services/wakapi.nix # 2
+    ./services/firefly-iii.nix # 3
+    ./services/restic-server.nix # 4
+    ./services/joplin-server.nix # 5
   ];
 
   networking.hostName = "pix"; # Define your hostname.

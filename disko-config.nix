@@ -56,6 +56,7 @@
                   "/data/vencloud" = { };
                   "/data/wakapi" = { };
                   "/data/firefly-iii" = { };
+                  "/data/joplin-server" = { mountOptions = [ "umask=0660" ]; };
                   # Subvolume for the swapfile
                   "/swap" = {
                     mountpoint = "/.swap";
