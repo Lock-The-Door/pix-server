@@ -6,8 +6,9 @@
   users.users."joplin-server" = {
     group = "joplin-server";
     isSystemUser = true;
+    home = "/data/joplin-server";
   };
-  users.groups."joplin-server" = {};
+  users.groups."joplin-server" = { };
 
   virtualisation.oci-containers.containers."joplin-server" = {
     preRunExtraOptions = [ "--runtime" "${pkgs.crun}/bin/crun" ];
