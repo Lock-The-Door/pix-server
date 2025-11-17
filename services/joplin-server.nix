@@ -11,6 +11,7 @@
   users.groups."joplin-server" = { };
 
   virtualisation.oci-containers.containers."joplin-server" = {
+  	autoStart = false;
     preRunExtraOptions = [ "--runtime" "${pkgs.crun}/bin/crun" ];
     podman.user = "joplin-server";
 
