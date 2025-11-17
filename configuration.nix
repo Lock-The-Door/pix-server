@@ -12,7 +12,7 @@
     ./services/wakapi.nix # 2
     ./services/firefly-iii.nix # 3
     ./services/restic-server.nix # 4
-    ./services/joplin-server.nix # 5
+    # ./services/joplin-server.nix # 5
   ];
 
   networking.hostName = "pix"; # Define your hostname.
