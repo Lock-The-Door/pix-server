@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-25.11";
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
+    nixos-raspberrypi.inputs.nixpkgs.url =
+      "github:nvmd/nixpkgs/modules-with-keys-25.11";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -19,7 +21,7 @@
     ];
   };
 
-  outputs = { nixpkgs, disko, nixos-raspberrypi, vencloud, ... }@inputs: {
+  outputs = { nixpkgs, disko, nixos-raspberrypi, ... }@inputs: {
     nixosConfigurations = {
       pix = nixos-raspberrypi.lib.nixosSystemFull {
         specialArgs = inputs;
