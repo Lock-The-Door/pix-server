@@ -31,7 +31,7 @@
       packages = forAllSystems (system:
         let pkgs = nixpkgsFor.${system};
         in {
-          default = pkgs.buildGo123Module {
+          default = pkgs.buildGoModule {
             pname = "vencloud";
             inherit version;
             # In 'nix develop', we don't need a copy of the source tree
