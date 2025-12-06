@@ -13,6 +13,7 @@
     ./services/firefly-iii.nix # 3
     ./services/restic-server.nix # 4
     # ./services/joplin-server.nix # 5
+    ./services/croc.nix
   ];
 
   networking.hostName = "pix"; # Define your hostname.
