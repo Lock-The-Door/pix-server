@@ -80,7 +80,8 @@
     authKeyFile = "/etc/nixos/auth/tailscale";
     useRoutingFeatures = "server";
     permitCertUid = "caddy";
-    extraUpFlags = [ "--advertise-exit-node" "--exit-node-allow-lan-access" "--ssh" "--qr" ];
+    extraUpFlags =
+      [ "--advertise-exit-node" "--exit-node-allow-lan-access" "--ssh" "--qr" ];
   };
   fileSystems."/var/lib/tailscale" = {
     depends = [ "/data" ];
