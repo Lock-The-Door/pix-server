@@ -2,7 +2,7 @@
   description = "My NixOS Server Configuration for a Raspberry Pi 5";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-25.05";
+    nixpkgs.url = "nixpkgs/nixos-25.11";
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
