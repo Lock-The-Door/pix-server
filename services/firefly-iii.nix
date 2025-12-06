@@ -106,7 +106,7 @@ in { pkgs, ... }: {
         "d /run/firefly-iii-data/upload 0700 firefly-iii firefly-iii"
       ];
 
-      system.stateVersion = "25.05";
+      system.stateVersion = "25.11";
     };
 
     bindMounts = {
